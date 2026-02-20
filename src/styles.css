@@ -1,0 +1,762 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --bg: #0d0d0d;
+  --panel: rgba(20, 20, 20, 0.9);
+  --panel-2: #101010;
+  --border: #1a1a1a;
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.75);
+  --netflix-red: #e50914;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: block;
+  background: var(--bg);
+  color: var(--text);
+}
+
+section {
+  padding: 0 32px;
+  background-color: var(--bg);
+}
+
+ul {
+  display: flex;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  transition: opacity 200ms ease;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+/* NAV */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+}
+
+.nav__row {
+  display: flex;
+  flex-direction: column;
+}
+
+.links__container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.nav__links {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.nav__link {
+  font-weight: bold;
+  color: white;
+  transition: color 200ms ease;
+}
+
+.link__hover-effect:after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 0%;
+  bottom: -3px;
+  right: 0;
+  transition: width 200ms ease;
+}
+
+.link__hover-effect:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+.link__hover-effect--red:after {
+  background-color: var(--netflix-red);
+}
+
+/* LAYOUT HELPERS */
+.container {
+  padding: 24px;
+}
+
+.row {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.row__narrow {
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* LANDING */
+#landing {
+  height: 100vh;
+  padding: 0 32px;
+}
+
+.logo__img {
+  width: 100%;
+  max-width: 160px;
+}
+
+.logo__header--img {
+  width: 100%;
+  max-width: 320px;
+}
+
+.search__movie {
+  width: 100%;
+  padding-top: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SEARCH BAR */
+.header__search {
+  width: 100%;
+  max-width: 448px;
+  height: 68px;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.search--input {
+  width: 100%;
+  height: 100%;
+  border-radius: 23px;
+  border: 2px solid var(--border);
+  background-color: var(--bg);
+  color: white;
+  padding: 20px 198px 20px 32px;
+  position: absolute;
+  font-size: 16px;
+  font-weight: 500;
+  z-index: 1;
+  transition: box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.search--btn {
+  width: 100%;
+  height: calc(100% - 14px);
+  max-width: 140px;
+  margin: 8px;
+  padding: 12px 28px;
+  color: white;
+  background-color: var(--netflix-red);
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  z-index: 2;
+  transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.search--btn:hover {
+  background-color: #b00710;
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px rgba(229, 9, 20, 0.25);
+}
+
+/* MOVIES SECTION */
+#movies {
+  position: relative;
+}
+
+/* results grid (single source of truth) */
+.searched__movies {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 26px;
+  align-items: stretch;
+  padding: 32px 0;
+}
+
+/* empty state text in the center of the grid */
+#movies .searched__movies > p {
+  grid-column: 1 / -1;
+  justify-self: center;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  padding: 28px 0;
+  color: #fff;
+}
+
+/* pagination buttons */
+.movie__buttons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding-bottom: 38px;
+}
+
+.back__btn,
+.next__btn {
+  background-color: var(--netflix-red);
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.back__btn:hover,
+.next__btn:hover {
+  background-color: #b00710;
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px rgba(229, 9, 20, 0.25);
+}
+
+.next__btn:disabled,
+.back__btn:disabled {
+  background-color: #4d4d4d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* MOVIE CARD (this is what Home.jsx uses) */
+.movieCard {
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 22px 22px 26px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.movieCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.35), 0 0 26px rgba(229, 9, 20, 0.45);
+}
+
+.movieCard__posterWrap {
+  width: 210px;
+  height: 310px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b0b0b;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+}
+
+.movieCard__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1);
+  transition: transform 200ms ease;
+}
+
+.movieCard:hover .movieCard__poster {
+  transform: scale(1.04);
+}
+
+.movieCard__text {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.movieCard__title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+  transition: color 200ms ease;
+}
+
+.movieCard__year {
+  margin: 10px 0 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0.95;
+  transition: color 200ms ease;
+}
+
+.movieCard:hover .movieCard__title,
+.movieCard:hover .movieCard__year {
+  color: var(--netflix-red);
+}
+
+/* DETAILS PAGE */
+.moviePage__container {
+  min-height: 100vh;
+  background: #0b0b0b;
+  color: #fff;
+  padding: 22px;
+}
+
+.moviePage__top {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.moviePage__brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.moviePage__brandLogo {
+  height: 52px;
+  width: auto;
+  display: block;
+  opacity: 0.95;
+  margin-bottom: 12px;
+  transition: transform 180ms ease, filter 180ms ease, opacity 180ms ease;
+}
+
+.moviePage__brand:hover .moviePage__brandLogo {
+  transform: scale(1.05);
+  opacity: 1;
+  filter: drop-shadow(0 0 14px rgba(229, 9, 20, 0.45));
+}
+
+.moviePage__content {
+  max-width: 1100px;
+  margin: 18px auto 0;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 28px;
+}
+
+.moviePage__posterWrap {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.moviePage__poster {
+  width: 100%;
+  display: block;
+}
+
+.moviePage__title {
+  margin: 0;
+  font-size: 2.2rem;
+}
+
+.moviePage__meta {
+  margin-top: 10px;
+  opacity: 0.85;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.moviePage__plot {
+  margin-top: 16px;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+.moviePage__grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.moviePage__label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  opacity: 0.65;
+  margin-bottom: 4px;
+}
+
+/* SIMILAR MOVIES (5 tiles, no scrollbar, hover room) */
+.moviePage__similar {
+  max-width: 1100px;
+  margin: 34px auto 0;
+  overflow: visible;
+}
+
+.moviePage__sectionTitle {
+  margin: 0 0 12px 0;
+}
+
+.movieRow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(140px, 1fr));
+  gap: 16px;
+  overflow: visible;
+  padding: 14px 10px 24px;
+}
+
+.movieRow__card {
+  position: relative;
+  z-index: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.movieRow__img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  transition: transform 200ms ease;
+}
+
+.movieRow__overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1));
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+}
+
+.movieRow__name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.movieRow__card:hover {
+  transform: scale(1.08);
+  z-index: 5;
+  box-shadow: 0 0 18px rgba(229, 9, 20, 0.55);
+}
+
+.movieRow__card:hover .movieRow__img {
+  transform: scale(1.05);
+}
+
+.movieRow__card:hover .movieRow__overlay {
+  opacity: 1;
+}
+
+.movieRow__card:hover .movieRow__overlay,
+.movieRow__card:hover .movieRow__overlay * {
+  color: var(--netflix-red);
+}
+
+/* FOOTER */
+footer {
+  background-color: var(--panel-2);
+  position: relative;
+}
+
+.footer__row {
+  max-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4% 0;
+}
+
+.footer__logo {
+  display: flex;
+}
+
+.footer__social--list {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 28px;
+}
+
+.footer__social--link,
+.footer__copyright,
+.footer__logo--popper {
+  color: white;
+  transition: color 200ms ease;
+}
+
+.footer__logo--popper {
+  position: absolute;
+  right: 0;
+  top: 20px;
+  font-weight: 700;
+  opacity: 0;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.footer__anchor {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.footer__anchor:hover .footer__logo--popper {
+  transform: translateX(60px);
+  opacity: 1;
+}
+
+.nav__link:hover,
+.footer__social--link:hover {
+  color: var(--netflix-red);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .moviePage__content {
+    grid-template-columns: 1fr;
+  }
+
+  .movieRow {
+    grid-template-columns: repeat(3, minmax(140px, 1fr));
+  }
+
+  .movieRow__img {
+    height: 210px;
+  }
+}
+
+@media (max-width: 700px) {
+  .nav__links {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .movieRow {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+}
+
+/* style ONLY the back button on the movie page */
+.moviePage__back {
+  appearance: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease,
+    border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.moviePage__back:hover {
+  color: #e50914;
+  border-color: rgba(229, 9, 20, 0.85);
+  background: rgba(229, 9, 20, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px rgba(229, 9, 20, 0.35);
+}
+
+.moviePage__back:active {
+  transform: translateY(0);
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.25);
+}
+
+.moviePage__back:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.35);
+}
+/* =========================
+   PROJECTOR SEARCH EFFECT
+   ========================= */
+
+.projector {
+  position: relative;
+  overflow: visible;
+  border-radius: 999px;
+  isolation: isolate;
+}
+
+/* reels stay fixed, only the ::before rotates (prevents bobbing) */
+.projector__reel {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 10px rgba(0,0,0,0.55));
+}
+
+.projector__reel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/public/assets/5004.png") center/contain no-repeat; /* <-- change filename */
+  transform-origin: 50% 50%;
+  filter:
+    drop-shadow(1px 0 0 #fff)
+    drop-shadow(-1px 0 0 #fff)
+    drop-shadow(0 1px 0 #fff)
+    drop-shadow(0 -1px 0 #fff);
+}
+
+/* keep your reel placement values (tweak if needed) */
+.projector__reel--big {
+  width: 42px;
+  height: 42px;
+  left: 380px;
+  top: -44px;
+}
+
+.projector__reel--small {
+  width: 32px;
+  height: 32px;
+  left: 450px;
+  top: 5px;
+}
+
+/* spin 360 only while focused */
+.projector--on .projector__reel::before {
+  animation: reelSpin 700ms linear infinite;
+ 
+
+}
+
+@keyframes reelSpin {
+  to { transform: rotate(360deg); }
+}
+
+.projector__beam {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 560px;
+  height: 240px;
+
+  transform: translateX(-50%) translateY(-14px);
+  transform-origin: top center;
+
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+
+  background:
+    radial-gradient(ellipse at top, rgba(255,255,255,0.20), transparent 55%),
+    linear-gradient(to bottom, rgba(229,9,20,0.14), transparent 70%);
+  filter: blur(2px);
+
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+
+  transition: opacity 220ms ease, transform 260ms ease;
+}
+
+.projector--on .projector__beam {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.projector--on .search--input {
+  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.35), 0 0 22px rgba(229, 9, 20, 0.20);
+  border-color: rgba(229, 9, 20, 0.55);
+}
+
+/* responsive */
+@media (max-width: 700px) {
+  .projector__beam { width: 360px; height: 190px; }
+}
+
+
+/* ===== hide reels until focus ===== */
+.projector__reel {
+  opacity: 0;
+  transform: translateY(2px); /* tiny settle */
+  transition: opacity 200ms ease, transform 240ms ease;
+}
+
+.projector--on .projector__reel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* if your reels are drawn on ::before and spinning, keep this */
+.projector--on .projector__reel::before {
+  animation: reelSpin 700ms linear infinite;
+}
+
+/* ===== bigger / wider projector beam (shine DOWN) ===== */
+.projector__beam {
+  /* bigger footprint */
+  width: 820px;   /* wider */
+  height: 360px;  /* longer */
+
+  left: 50%;
+  top: 100%;
+
+  transform: translateX(-50%) translateY(-18px) scaleY(0.95);
+  transform-origin: top center;
+
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+
+  /* stronger “projected light” look */
+  background:
+    radial-gradient(ellipse at top, rgba(255,255,255,0.22), transparent 55%),
+    radial-gradient(ellipse at 50% 35%, rgba(92, 92, 92, 0.16), transparent 70%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.12), transparent 75%);
+
+  filter: blur(2px);
+
+  /* wider cone */
+  clip-path: polygon(50% 0%, -10% 100%, 110% 100%);
+
+  transition: opacity 220ms ease, transform 260ms ease;
+}
+
+.projector--on .projector__beam {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-6px) scaleY(1);
+}
