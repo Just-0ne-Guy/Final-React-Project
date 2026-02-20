@@ -786,6 +786,10 @@ footer {
     border-radius: 18px;
   }
 
+  .projector__reel{
+    display: none;
+  }
+
  
   .projector__beam {
     top: calc(100% + 8px);
